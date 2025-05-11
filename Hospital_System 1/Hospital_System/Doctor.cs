@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hospital_System
 {
-    public class Doctor : Entity, IFiles
+    public class Doctor : Entity, IFiles, IAdmin
     {
         public string Gmail { get; set; }
         public string Name_Doctor { get; set; }
@@ -56,6 +56,27 @@ namespace Hospital_System
         public string DataString()
         {
             return $"{Id}, {Gmail}, {Name_Doctor}, {Birth_Doctor}, {Gender_Doctor}, {Number_Doctor}, {Password}";
+        }
+
+        public void Parse(string line)
+        {
+            var parts = line.Split(',');
+            if (parts.Length >= 7 )
+            {
+                Id = Guid.Parse(parts[0].Trim());
+                Gmail = parts[1].Trim();
+                Name_Doctor = parts[2].Trim();
+                Birth_Doctor = parts[3].Trim();
+                Gender_Doctor = parts[4].Trim();
+                Number_Doctor = parts[5].Trim();
+                Specialization_Doctor = parts[6].Trim();
+                Password = parts.Length > 7 ? parts[7].Trim() : string.Empty;
+            }
+        }
+
+        public override bool Search(string searchString)
+        {
+            throw new NotImplementedException();
         }
     }
 }

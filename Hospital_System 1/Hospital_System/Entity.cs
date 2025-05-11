@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hospital_System
 {
-    public class Entity
+    public abstract class Entity : IEntity
     {
         public Guid Id { get; set; }
 
@@ -29,5 +29,7 @@ namespace Hospital_System
         {
             return "[" + Id.ToString() + "]";
         }
+
+        public abstract bool Search(string searchString);
     }
 }

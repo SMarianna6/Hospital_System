@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Hospital_System
 {
-    public interface IEntity
+    public interface IAdmin
     {
-        public bool Search(string searchString);
-        public bool IsValid();
+        void Parse(string record);
     }
 }

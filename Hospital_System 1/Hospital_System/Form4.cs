@@ -26,6 +26,9 @@ namespace Hospital_System
             for (int i = 0; i < lines.Length; i++)
             {
                 string[] employee = lines[i].Split(',');
+
+                if (employee.Length <= 6) continue;
+
                 if (employee[1].Trim() == gmail && employee[2].Trim() == name_doctor)
                 {
                     employee[6] = newpassword;

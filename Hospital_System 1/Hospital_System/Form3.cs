@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
 using static Hospital_System.Form2;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Hospital_System
 {
@@ -20,6 +21,9 @@ namespace Hospital_System
             InitializeComponent();
             comboBox1.Items.Add("Doctor");
             comboBox1.Items.Add("Nurse");
+
+            comboBox4.Items.Add("Male");
+            comboBox4.Items.Add("Female");
         }
 
 
@@ -35,23 +39,30 @@ namespace Hospital_System
             string gmail = textBox1.Text;
             string name_doctor = textBox2.Text;
             string birth_doctor = textBox3.Text;
-            string gender_d = textBox4.Text;
+            string gender_d = comboBox4.Text;
             string number_d = textBox5.Text;
 
             if (comboBox1.SelectedItem.ToString() == "Doctor")
             {
                 Doctor doctor = new Doctor(gmail, name_doctor, birth_doctor, gender_d, number_d);
-                SaveDelegate save = SaveToFile;
+                SaveDelegate<Doctor> save = SaveToFile;
                 save(doctor, @"C:\Users\User\Doctors.txt");
                 MessageBox.Show("Doctor in Base");
             }
             else if (comboBox1.SelectedItem.ToString() == "Nurse")
             {
                 Nurse nurse = new Nurse(gmail, name_doctor, birth_doctor, gender_d, number_d);
-                SaveDelegate save = SaveToFile;
+                SaveDelegate<Nurse> save = SaveToFile;
                 save(nurse, @"C:\Users\User\Nurses.txt");
                 MessageBox.Show("Nurse in Base");
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Form8 form8 = new Form8();
+            form8.Show();
         }
     }
 }

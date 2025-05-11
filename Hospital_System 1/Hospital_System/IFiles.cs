@@ -11,5 +11,5 @@ namespace Hospital_System
         string DataString();
     }
 
-    public delegate void SaveDelegate(IFiles obj, string filePath);
+    public delegate void SaveDelegate<T>(T obj, string filePath) where T : IFiles;
 }

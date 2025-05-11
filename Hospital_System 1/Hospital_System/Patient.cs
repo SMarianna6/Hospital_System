@@ -7,7 +7,7 @@ using static Hospital_System.Form2;
 
 namespace Hospital_System
 {
-    public class Patient : Entity, IEntity, IFiles
+    public class Patient : Entity, IFiles
     {
         public string Name { get; set; }
         public string Age { get; set; }
@@ -61,11 +61,10 @@ namespace Hospital_System
             return $"{base.Format()}[{Name}][{Age}][{Gender}][{Number}][{Name_Doctor}]";
         }
 
-        public bool Search(string searchString)
+        public override bool Search(string searchString)
         {
             return Name!.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
                    Name_Doctor!.Contains(searchString, StringComparison.OrdinalIgnoreCase);
         }
-
     }
 }

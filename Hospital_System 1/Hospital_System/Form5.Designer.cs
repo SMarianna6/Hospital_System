@@ -92,21 +92,21 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(204, 144);
+            textBox1.Location = new Point(200, 144);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 14;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(204, 211);
+            textBox2.Location = new Point(200, 211);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(100, 23);
             textBox2.TabIndex = 15;
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(204, 285);
+            textBox3.Location = new Point(200, 285);
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(100, 23);
             textBox3.TabIndex = 16;

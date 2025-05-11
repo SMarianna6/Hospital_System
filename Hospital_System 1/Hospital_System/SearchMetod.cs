@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace Hospital_System
 {
-    internal class SearchMetod
+    internal class SearchMetod<T> where T : IEntity
     {
-        public static IEnumerable<IEntity> Entities { get; private set; } = new List<IEntity>();
+        private static List<T> entities = new List<T>();
 
-        public static void Add(IEntity entity)
+        public static void Add(T entity)
         {
-            Entities = Entities.Append(entity);
+           entities.Add(entity);
         }
 
-        public static IEnumerable<IEntity> Search(string searchString)
+        // Task 1. LINQ to perform complex searching
+        public static IEnumerable<T> Search(string searchString)
         {
-            foreach (var entity in Entities)
-            {
-                if (entity.Search(searchString))
-                {
-                    yield return entity;
-                }
-            }
+           return entities.Where(it => it.Search(searchString));
+        }
+
+        public static void Clear()
+        {
+           entities.Clear();
         }
     }
 }

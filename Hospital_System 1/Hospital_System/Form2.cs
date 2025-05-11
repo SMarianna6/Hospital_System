@@ -17,9 +17,12 @@ namespace Hospital_System
         public Form2()
         {
             InitializeComponent();
+            comboBox1.Items.Add("Male");
+            comboBox1.Items.Add("Female");
+            comboBox1.Items.Add("Other");
         }
 
-        public static void SaveToFile(IFiles obj, string filePath)
+        public static void SaveToFile<T>(T obj, string filePath) where T : IFiles
         {
             File.AppendAllText(filePath, obj.DataString() + Environment.NewLine);
         }
@@ -35,12 +38,12 @@ namespace Hospital_System
         {
             string name = textBoxName.Text;
             string age = textBoxAge.Text;
-            string gender = textBoxGender.Text;
+            string gender = comboBox1.Text;
             string number = textBoxNumber.Text;
             string name_doctor = textBoxDoctorName.Text;
 
             Patient patient = new Patient(Guid.NewGuid(), name, age, gender, number, name_doctor);
-            SaveDelegate save = SaveToFile;
+            SaveDelegate<Patient> save = SaveToFile;
             save(patient, @"C:\Users\User\Patients.txt");
 
             MessageBox.Show("RECORD IS MADE");

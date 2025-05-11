@@ -83,7 +83,7 @@
             Controls.Add(button1);
             Controls.Add(textBox1);
             Name = "Form7";
-            Text = "Form7";
+            Text = "Nurses page";
             ResumeLayout(false);
             PerformLayout();
         }

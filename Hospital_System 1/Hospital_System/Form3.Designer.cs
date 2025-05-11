@@ -37,11 +37,12 @@
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             textBox3 = new TextBox();
-            textBox4 = new TextBox();
             textBox5 = new TextBox();
             button1 = new Button();
             button2 = new Button();
             comboBox1 = new ComboBox();
+            button3 = new Button();
+            comboBox4 = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -78,11 +79,11 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(32, 246);
+            label2.Location = new Point(85, 246);
             label2.Name = "label2";
-            label2.Size = new Size(109, 29);
+            label2.Size = new Size(56, 29);
             label2.TabIndex = 5;
-            label2.Text = "Birthdate";
+            label2.Text = "Age";
             // 
             // label5
             // 
@@ -125,13 +126,6 @@
             textBox3.Size = new Size(111, 23);
             textBox3.TabIndex = 10;
             // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(179, 322);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(111, 23);
-            textBox4.TabIndex = 11;
-            // 
             // textBox5
             // 
             textBox5.Location = new Point(179, 381);
@@ -153,7 +147,7 @@
             // button2
             // 
             button2.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.Location = new Point(713, 415);
+            button2.Location = new Point(632, 415);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 15;
@@ -169,16 +163,36 @@
             comboBox1.Size = new Size(121, 23);
             comboBox1.TabIndex = 16;
             // 
+            // button3
+            // 
+            button3.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button3.Location = new Point(713, 415);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 17;
+            button3.Text = "next";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // comboBox4
+            // 
+            comboBox4.FormattingEnabled = true;
+            comboBox4.Location = new Point(179, 322);
+            comboBox4.Name = "comboBox4";
+            comboBox4.Size = new Size(111, 23);
+            comboBox4.TabIndex = 18;
+            // 
             // Form3
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(comboBox4);
+            Controls.Add(button3);
             Controls.Add(comboBox1);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(textBox5);
-            Controls.Add(textBox4);
             Controls.Add(textBox3);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
@@ -205,10 +219,11 @@
         private TextBox textBox1;
         private TextBox textBox2;
         private TextBox textBox3;
-        private TextBox textBox4;
         private TextBox textBox5;
         private Button button1;
         private Button button2;
         private ComboBox comboBox1;
+        private Button button3;
+        private ComboBox comboBox4;
     }
 }

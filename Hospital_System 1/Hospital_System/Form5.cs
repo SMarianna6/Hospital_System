@@ -61,6 +61,9 @@ namespace Hospital_System
             foreach (var line in lines)
             {
                 string[] employee = line.Split(',');
+
+                if (employee.Length <= 6) continue;
+
                 if (employee[1].Trim() == gmail && employee[2].Trim() == name_doctor && employee[6].Trim() == password)
                 {
                     userFound = true;

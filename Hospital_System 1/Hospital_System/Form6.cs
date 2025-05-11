@@ -17,13 +17,18 @@ namespace Hospital_System
 {
     public partial class Form6 : MaterialForm
     {
+        private List<Patient> patients = new List<Patient>();
+        private List<Patient> searchResults = new List<Patient>();
+
         public Form6()
         {
             InitializeComponent();
             Patients();
+            comboBox2.Items.Add("Procedures");
+            comboBox2.Items.Add("Medication");
+            comboBox2.Items.Add("Surgeries");
         }
 
-        List<Patient> patients = new List<Patient>();
         private void Patients()
         {
             string filePath = @"C:\Users\User\Patients.txt";
@@ -31,40 +36,57 @@ namespace Hospital_System
             if (File.Exists(filePath))
             {
                 string[] lines = File.ReadAllLines(filePath);
-
-                for (int i = 0; i < lines.Length; i++)
+                foreach (string line in lines)
                 {
-                    string line = lines[i];
                     string[] data = line.Split(',');
 
                     if (data.Length >= 6)
                     {
-                        var patient = new Patient(Guid.Parse(data[0].Trim()), data[1].Trim(), data[2].Trim(), data[3].Trim(), data[4].Trim(), data[5].Trim());
+                        var patient = new Patient(
+                            Guid.Parse(data[0].Trim()),
+                            data[1].Trim(),
+                            data[2].Trim(),
+                            data[3].Trim(),
+                            data[4].Trim(),
+                            data[5].Trim()
+                        );
 
                         if (data.Length > 6) patient.Treatment = data[6].Trim();
                         if (data.Length > 7) patient.Nurse = data[7].Trim();
+
                         patients.Add(patient);
-                        SearchMetod.Add(patient);
+                        SearchMetod<Patient>.Add(patient);
                     }
                 }
             }
 
-            for (int i = 0; i < patients.Count; i++)
+            listBox1.Items.Clear();
+            foreach (var patient in patients)
             {
-                listBox1.Items.Add(patients[i].Name);
+                if (string.IsNullOrEmpty(patient.Treatment) && string.IsNullOrEmpty(patient.Nurse))
+                {
+                    listBox1.Items.Add(patient.Name);
+                }
             }
         }
-
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex >= 0)
             {
+                Patient selectedPatient;
 
-                Patient selectedPatient = patients[listBox1.SelectedIndex];
+                if (searchResults.Count > 0)
+                    selectedPatient = searchResults[listBox1.SelectedIndex];
+                else
+                    selectedPatient = patients[listBox1.SelectedIndex];
 
-                textBox1.Text = $"{selectedPatient.Name}, {selectedPatient.Age}, {selectedPatient.Gender}, {selectedPatient.Number}, {selectedPatient.Name_Doctor}";
-                textBox2.Text = selectedPatient.Treatment;
+                //Task 3
+                textBox1.Text = string.Join(",", new List<string>
+                { selectedPatient.Name, selectedPatient.Age, selectedPatient.Gender, selectedPatient.Number, selectedPatient.Name_Doctor }
+                .Select(s => s));
+
+                comboBox2.Text = selectedPatient.Treatment;
                 textBox3.Text = selectedPatient.Nurse;
             }
         }
@@ -73,12 +95,15 @@ namespace Hospital_System
         {
             if (listBox1.SelectedIndex >= 0)
             {
-                Patient selectedPatient = patients[listBox1.SelectedIndex];
+                Patient selectedPatient;
 
-                selectedPatient.Treatment = textBox2.Text;
+                if (searchResults.Count > 0)
+                    selectedPatient = searchResults[listBox1.SelectedIndex];
+                else
+                    selectedPatient = patients[listBox1.SelectedIndex];
+
+                selectedPatient.Treatment = comboBox2.Text;
                 selectedPatient.Nurse = textBox3.Text;
-
-                listBox1.Items[listBox1.SelectedIndex] = $"{selectedPatient.Id} - {selectedPatient.Treatment}";
 
                 SavePatientsToFile();
 
@@ -88,14 +113,12 @@ namespace Hospital_System
 
         private void SavePatientsToFile()
         {
-            string newFilePath = @"C:\Users\User\Patients.txt";
-            using (StreamWriter writer = new StreamWriter(newFilePath, false))
+            string filePath = @"C:\Users\User\Patients.txt";
+            using (StreamWriter writer = new StreamWriter(filePath, false))
             {
-                for (int i = 0; i < patients.Count; i++)
+                foreach (var patient in patients)
                 {
-                    Patient patient = patients[i];
-                    string dataPatient = $"{patient.Id}, {patient.Name}, {patient.Age}, {patient.Gender}, {patient.Number}, {patient.Name_Doctor}, {patient.Treatment}, {patient.Nurse}";
-                    writer.WriteLine(dataPatient);
+                    writer.WriteLine(patient.DataString());
                 }
             }
         }
@@ -103,38 +126,30 @@ namespace Hospital_System
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
-            Form1 form1 = new Form1();
-            form1.Show();
+            new Form1().Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrEmpty(textBox4.Text))
+                if (string.IsNullOrWhiteSpace(textBox4.Text))
                 {
                     MessageBox.Show("Enter data");
                     return;
                 }
 
-                IEnumerable<IEntity> foundEntities = SearchMetod.Search(textBox4.Text);
-
+                searchResults = SearchMetod<Patient>.Search(textBox4.Text).ToList();
                 listBox1.Items.Clear();
 
-                bool found = false;
-
-                foreach (IEntity entity in foundEntities)
+                if (searchResults.Any())
                 {
-                    var patientEntity = entity as Patient;
-
-                    if (patientEntity != null)
+                    foreach (var patient in searchResults)
                     {
-                        listBox1.Items.Add(patientEntity.Name);
-                        found = true;
+                        listBox1.Items.Add(patient.Name);
                     }
                 }
-
-                if (!found)
+                else
                 {
                     MessageBox.Show("No patients found.");
                 }
